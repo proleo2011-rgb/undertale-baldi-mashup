@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undertale × Baldi's Basics</title>
+  <style>
+    body {
+      background: #111;
+      color: white;
+      font-family: monospace;
+      text-align: center;
+      margin: 20px;
+    }
+    #school {
+      background: #d8c69a;
+      border: 5px solid white;
+      max-width: 600px;
+      height: 300px;
+      margin: 20px auto;
+      position: relative;
+      overflow: hidden;
+    }
+    #frisk {
+      position: absolute;
+      left: 45%;
+      top: 65%;
+      font-size: 32px;
+    }
+    #baldi {
+      position: absolute;
+      right: 12%;
+      top: 15%;
+      font-size: 32px;
+    }
+    button {
+      background: black;
+      color: white;
+      border: 2px solid white;
+      padding: 12px;
+      margin: 5px;
+      cursor: pointer;
+      font-family: monospace;
+    }
+    #message {
+      min-height: 45px;
+    }
+  </style>
+</head>
+<body>
+  <h1>UNDERTALE × BALDI'S BASICS</h1>
+  <p>Explora la escuela con Frisk.</p>
+
+  <div id="school">
+    <div id="baldi">📏</div>
+    <div id="frisk">❤️</div>
+  </div>
+
+  <p id="message">Frisk entró en la escuela. ¡Busca los cuadernos!</p>
+  <p>Cuadernos: <span id="books">0</span> / 3</p>
+
+  <button onclick="move('up')">⬆️ Arriba</button><br>
+  <button onclick="move('left')">⬅️ Izquierda</button>
+  <button onclick="move('down')">⬇️ Abajo</button>
+  <button onclick="move('right')">➡️ Derecha</button>
+  <br>
+  <button onclick="collect()">Recoger cuaderno</button>
+  <button onclick="battle()">Enfrentar a Baldi</button>
+
+  <script>
+    let x = 45;
+    let y = 65;
+    let books = 0;
+
+    function move(direction) {
+      if (direction === 'up') y -= 10;
+      if (direction === 'down') y += 10;
+      if (direction === 'left') x -= 10;
+      if (direction === 'right') x += 10;
+
+      x = Math.max(0, Math.min(90, x));
+      y = Math.max(0, Math.min(85, y));
+
+      document.getElementById('frisk').style.left = x + '%';
+      document.getElementById('frisk').style.top = y + '%';
+      document.getElementById('message').textContent =
+        'Frisk explora la escuela...';
+    }
+
+    function collect() {
+      if (books < 3) {
+        books++;
+        document.getElementById('books').textContent = books;
+        document.getElementById('message').textContent =
+          '¡Encontraste un cuaderno! (' + books + '/3)';
+      } else {
+        document.getElementById('message').textContent =
+          '¡Ya tienes los tres cuadernos!';
+      }
+    }
+
+    function battle() {
+      if (books < 3) {
+        document.getElementById('message').textContent =
+          'Baldi dice: ¡Primero encuentra los 3 cuadernos!';
+      } else {
+        document.getElementById('message').textContent =
+          '¡COMBATE! Baldi te propone un problema de matemáticas: ¿2 + 3 = ?';
+        const answer = prompt('Baldi pregunta: ¿Cuánto es 2 + 3?');
+        if (answer === '5') {
+          document.getElementById('message').textContent =
+            '¡Correcto! Frisk superó el desafío de Baldi. ¡VICTORIA!';
+        } else {
+          document.getElementById('message').textContent =
+            'Respuesta incorrecta. ¡Inténtalo otra vez!';
+        }
+      }
+    }
+  </script>
+</body>
+</html>
